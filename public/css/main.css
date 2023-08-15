@@ -1,0 +1,204 @@
+*{
+    font-family: 'VT323', monospace;
+    cursor: url('/assets/global/cursor.png'), auto;
+}
+
+body {
+    background-color: #212121;
+    height: auto;
+    width: 100%;
+    margin: auto auto;
+    padding: 0;
+    overflow: hidden;
+}
+
+#transition-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.transition-img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#nav-wrapper {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    z-index: 9999;
+}
+
+.nav-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    padding: 15px;
+    overflow: hidden;
+}
+
+.nav-list {
+    opacity: 0;
+    height: 0;
+}
+
+.nav-btn {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: xx-large;
+    color: #008d21;
+    cursor: pointer;
+    width: 20vh;
+    height: 100%;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    border: 2px solid; /* Add a transparent border */
+    padding: 5px 10px; /* Add padding for the highlight effect */
+    transition: border-color 0.3s ease; /* Add transition for the border color */
+}
+
+.nav-active {
+    background-color: cyan;
+}
+
+.scanlines {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.horizontal {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.2) 70%, rgba(0, 0, 0, 0.6));
+    z-index: 10000;
+    background-size: 100% 0.35rem;
+    animation: 0.2s normal scanLines infinite;
+}
+
+.vertical {
+    z-index: 10000;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.2) 70%, rgba(0, 0, 0, 0.6));
+    background-size: 0.35rem 100%;
+    animation: 0.2s normal scanLines infinite;
+}
+
+.vertical::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, transparent, transparent 50%, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.2) 70%, rgba(0, 0, 0, 0.6));
+    background-size: 0.35rem 200%; /* Adjust the height of scanlines here */
+    animation: 7s linear scanLinesWrap infinite;
+}
+
+@keyframes scanLines {
+    0% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes scanLinesWrap {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+.input-overlay {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 7vh;
+    color: #008d21;
+    padding: 25px;
+}
+
+.wrapper-on {
+    display: flex !important; 
+}
+
+#home {
+    flex-direction: column;
+}
+
+.content-wrapper {
+    position: relative;
+    display: none;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.content-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: auto;
+}
+
+.glitch-stutter {
+    animation: glitch-stutter 0.1s infinite;
+}
+
+@keyframes glitch-stutter {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateY(1px);
+    }
+    
+    20%, 40%, 60%, 80% {
+        transform: translateY(-1px);
+    }
+}
+
+.glitch-blur {
+    filter: blur(1px);
+}
+
+
+.transition-on {
+    animation: transition 0.5s ease;
+}
+
+@keyframes transition {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}

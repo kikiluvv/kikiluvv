@@ -1,0 +1,163 @@
+#contact {
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+#contact-hero {
+    transition: all 0.5s ease;
+}
+
+.contact-content-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.contact-menu-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+}
+
+.contact-menu-link {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+}
+
+.contact-menu-icon {
+    position: relative;
+    width: 30%;
+}
+
+.contact-menu-icon:active {
+    border: 2px solid #ccc;
+}
+
+.contact-menu-text {
+    margin: 0;
+    padding: 0;
+    color: #ccc;
+    font-size: xx-large;
+}
+
+.contact-element-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 100%;
+}
+
+.contact-container-left,
+.contact-container-right {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    width: 45%;
+    height: 100%;
+    padding: 15px;
+}
+
+.contact-hr {
+    height: 85%;
+    margin: 0;
+}
+
+
+.contact-border {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 80%;
+    height: 4vh;
+    font-family: monospace;
+    font-size: x-large;
+    border: 1px solid #ccc;
+}
+
+.contact-top-text {
+    padding: 0;
+    margin: 0;
+    color: #ccc;
+    font-size: xx-large;
+}
+
+.contact-accent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 4vh;
+    padding: 0;
+    margin: 0;
+    color: #ccc;
+    font-size: xx-large;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.contact-accent:hover {
+    color: red;
+}
+
+.contact-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 80%;
+    height: 40vh;
+    margin: 0;
+    color: #ccc;
+    font-size: xx-large;
+    border: 1px solid #ccc;
+}
+
+
+.contact-text {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+    width: 100%;
+    filter: grayscale();
+}
+
+.contact-href {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    color: #ccc;
+    text-decoration: none;
+}
+
+.contact-href:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.ri {
+    margin: 0;
+    margin-right: 1vh;
+}
+

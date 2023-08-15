@@ -1,0 +1,149 @@
+#music {
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+#music-hero {
+    transition: all 0.5s ease;
+}
+
+.music-content-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.music-menu-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+}
+
+.music-menu-link {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+}
+
+.music-menu-icon {
+    position: relative;
+    width: 30%;
+}
+
+.music-menu-icon:active {
+    border: 2px solid #ccc;
+}
+
+.music-menu-text {
+    margin: 0;
+    padding: 0;
+    color: #ccc;
+    font-size: xx-large;
+}
+
+.music-element-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+}
+
+
+.music-border {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 80%;
+    height: 4vh;
+    font-family: monospace;
+    font-size: x-large;
+    border: 1px solid #ccc;
+}
+
+.music-top-text {
+    padding: 0;
+    margin: 0;
+    color: #ccc;
+    font-size: xx-large;
+}
+
+.music-accent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 4vh;
+    padding: 0;
+    margin: 0;
+    color: #ccc;
+    font-size: xx-large;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.music-accent:hover {
+    color: red;
+}
+
+.music-container {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    height: 40vh;
+    margin: 0;
+    color: #ccc;
+    font-size: xx-large;
+    border: 1px solid #ccc;
+}
+
+#music-container-certified {
+    height: 62vh;
+}
+
+.music-text {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+    width: 100%;
+    padding: 15px;
+    filter: grayscale();
+}
+
+.cursor {
+    animation: blink 1s infinite;
+    color: #ccc;
+}
+
+.cursor2,
+.cursor3,
+.cursor4 {
+    display: none;
+    animation: blink 1s infinite;
+    color: #ccc;
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+

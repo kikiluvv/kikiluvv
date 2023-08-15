@@ -1,0 +1,88 @@
+<link rel="stylesheet" href="/css/archive.css">
+
+
+<div id="archive" class="input-overlay glitch-element">AV-4</div>
+<div class="content-container">
+    <img id="archive-hero" class="hero-img glitch-element" src="/assets/index/kikilogo.png">
+</div>
+<div id="archiveMenu" class="archive-content-container archive-container-active">
+
+    <div class="archive-menu-container">
+        <div class="archive-menu-link" data-plink="vault">
+            <img class="archive-menu-icon glitch-element" src="/assets/global/web.png">
+            <p class="archive-menu-text glitch-element">music vault</p>
+        </div>
+    </div>
+    <div class="archive-menu-container">
+        <div class="archive-menu-link" data-plink="art">
+            <img class="archive-menu-icon glitch-element" src="/assets/global/web.png">
+            <p class="archive-menu-text glitch-element">artwork</p>
+        </div>
+    </div>
+    <div class="archive-menu-container">
+        <div class="archive-menu-link" data-plink="videos">
+            <img class="archive-menu-icon glitch-element" src="/assets/global/web.png">
+            <p class="archive-menu-text glitch-element">videos</p>
+        </div>
+    </div>
+</div>
+
+<div id="vault" class="archive-content-container">
+    <div class="archive-element-container glitch-element">
+        <div class="archive-border">
+            <p class="archive-top-text">music vault</p>
+            <p class="archive-accent archive-menu-back">X</p>
+        </div>
+        <div class="archive-container">
+            <div class="archive-text">
+                <p class="archive-menu-text">leaking beats soon...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="art" class="archive-content-container">
+    <div id="art-container" class="archive-element-container glitch-element">
+        <div class="archive-border">
+            <p class="archive-top-text">artwork</p>
+            <p class="archive-accent archive-menu-back">X</p>
+        </div>
+        <div id="gallery-container" class="archive-container">
+            <div class="gallery-left-btn" onclick="changeImage(-1)">
+                <p class="gallery-left-btn-p"><</p>
+            </div>
+            <div class="gallery-image-container">
+                <img id="gallery-image" class="gallery-image" src="">
+                <p id="gallery-image-p" class="gallery-image-p"></p>
+            </div>
+            <div class="gallery-right-btn" onclick="changeImage(1)">
+                <p class="gallery-right-btn-p">></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="videos" class="archive-content-container">
+    <div id="videos-container" class="archive-element-container glitch-element">
+        <div class="archive-border">
+            <p class="archive-top-text">videos</p>
+            <p class="archive-accent archive-menu-back">X</p>
+        </div>
+        <div id="video-container" class="archive-container">
+            <div class="gallery-left-btn" onclick="changeVideo(-1)">
+                <p class="gallery-left-btn-p"><</p>
+            </div>
+            <div class="gallery-image-container">
+                <video id="gallery-video" class="gallery-image" controls></video>
+                <p id="gallery-video-p" class="gallery-image-p"></p>
+            </div>
+            <div class="gallery-right-btn" onclick="changeVideo(1)">
+                <p class="gallery-right-btn-p">></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/archive/archive.js"></script>
+<script src="/js/archive/gallery.js"></script>
+<script src="/js/archive/videos.js"></script>

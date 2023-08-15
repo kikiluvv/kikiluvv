@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/contact.css">
+    <title>kikiluvv</title>
+</head>
+
+<body>
+    <div id="page-wrapper">
+        <div id="transition-wrapper">
+            <img class="transition-img" src="/assets/index/static.gif">
+        </div>
+        <div id="bg-wrapper">
+            <div class="scanlines horizontal"></div>
+            <div class="scanlines vertical"></div>
+        </div>
+    </div>
+    <div id="nav-wrapper" class="nav-wrapper glitch-element">
+        <div class="nav-container">
+            <div id="input-btn" class="nav-btn">INPUT</div>
+        </div>
+        <div class="nav-container nav-list">
+            <div class="nav-btn nav-active" data-overlay="home" data-target="home">HOME</div>
+            <div class="nav-btn" data-overlay="music" data-target="music">MUSIC</div>
+            <div class="nav-btn" data-overlay="projects" data-target="projects">PROJECTS</div>
+            <div class="nav-btn" data-overlay="archive" data-target="archive">ARCHIVE</div>
+            <div class="nav-btn" data-overlay="contact" data-target="contact">CONTACT</div>
+        </div>
+    </div>
+
+    <div id="home" class="content-wrapper wrapper-on">
+        <%- include('components/home.ejs') %>
+    </div>
+
+    <div id="music" class="content-wrapper">
+        <%- include('components/music.ejs') %>
+    </div>
+
+    <div id="projects" class="content-wrapper">
+        <%- include('components/projects.ejs') %>
+    </div>
+
+    <div id="archive" class="content-wrapper">
+        <%- include('components/archive.ejs') %>
+    </div>
+
+    <div id="contact" class="content-wrapper">
+        <%- include('components/contact.ejs') %>
+    </div>
+
+    </div>
+    <script src="/js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+
+.hero-img {
+    width: 35%;
+}
+
+.typewriter {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 50%;
+    height: 4vh;
+    font-family: monospace;
+    font-size: x-large;
+    border: 1px solid #ccc;
+}
+
+.typewriter-accent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 4vh;
+    padding: 0;
+    margin: 0;
+    color: #ccc;
+    font-size: xx-large;
+    border: 1px solid #ccc;
+}
+
+.typewriter-accent:hover {
+    color: red;
+    cursor: pointer;
+}
+
+.typewriter-content {
+    width: 50%;
+    height: 40vh;
+    margin: 0;
+    color: #ccc;
+    font-size: xx-large;
+    border: 1px solid #ccc;
+}
+
+.typewriter-top-text {
+    padding: 0;
+    margin: 0;
+    font-size: xx-large;
+    color: #ccc;
+}
+
+.typewriter-text {
+    height: 100%;
+    padding: 15px;
+    font-size: xx-large;
+}
+
+.text-container {
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+
+.cursor {
+    animation: blink 1s infinite;
+    color: #ccc;
+}
+
+.cursor2,
+.cursor3,
+.cursor4 {
+    display: none;
+    animation: blink 1s infinite;
+    color: #ccc;
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+

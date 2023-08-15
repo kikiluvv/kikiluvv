@@ -1,5 +1,6 @@
-### Hi there 👋
+### Hai 👋
 
+Thanks for visiting my page :P
 <!--
 **kikiluvv/kikiluvv** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
