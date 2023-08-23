@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 targetContainer.style.display = "flex";
             }
 
-            heroImg.style.width = '25%'
+            heroImg.classList.add('hero-shrink');
         });
     });
 
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 menuContainer.style.display = "flex";
             }
 
-            heroImg.style.width = '35%'
+            heroImg.classList.remove('hero-shrink');
         });
     });
 });

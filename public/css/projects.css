@@ -198,3 +198,10 @@
     }
 }
 
+
+@media (max-width: 768px) {
+    .project-container,
+    .project-border {
+        width: 100%;
+    }
+}

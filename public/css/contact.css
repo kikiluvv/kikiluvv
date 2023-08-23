@@ -123,7 +123,7 @@
     justify-content: space-evenly;
     align-items: center;
     width: 80%;
-    height: 40vh;
+    height: auto;
     margin: 0;
     color: #ccc;
     font-size: xx-large;
@@ -161,3 +161,11 @@
     margin-right: 1vh;
 }
 
+@media (max-width: 768px) {
+    .contact-container {
+        width: auto;
+    }
+    .contact-border {
+        width: 100%;
+    }
+}
