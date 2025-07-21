@@ -1,0 +1,140 @@
+/* kitsDetail.css */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(20, 20, 20, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+.modal-content {
+    background-color: #121212;
+    color: #f5f5f5;
+    border-radius: 16px;
+    max-width: 900px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+    position: relative;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    color: #fff;
+    cursor: pointer;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+    /* adds that cinematic depth */
+    transition: color 0.2s ease, transform 0.2s ease;
+    z-index: 999;
+}
+
+.modal-close-btn:hover {
+    color: #ff4c4c;
+    /* a bold red scream */
+    transform: scale(1.1);
+}
+
+.modal-image-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+}
+
+.detail-image {
+    width: 100%;
+    object-fit: cover;
+    max-height: 400px;
+    background: #000;
+    box-shadow:
+        inset 0 0 80px rgba(0, 0, 0, 0.5),
+        /* soft inner vignette */
+        0 4px 20px rgba(0, 0, 0, 0.6);
+    /* outer edge shadow for lift */
+    border-radius: 6px;
+    /* optional: adds a soft edge */
+}
+
+
+.detail-info {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.detail-info h1 {
+    margin: 0;
+    font-size: 2rem;
+    border-bottom: 1px solid #333;
+    padding-bottom: 0.5rem;
+}
+
+.detail-info p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #ccc;
+}
+
+.kits-modal-price {
+    font-size: 1.5rem !important;
+    color: #fff !important;
+}
+
+.tech-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0;
+    margin: 0;
+}
+
+.tech-list li {
+    background: #1e1e1e;
+    padding: 0.4rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    color: #a5e2ff;
+    border: 1px solid #2a2a2a;
+}
+
+.external-link {
+    margin-top: auto;
+    color: #7fd7ff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.external-link:hover {
+    color: #d1ecff;
+}

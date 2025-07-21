@@ -1,0 +1,17 @@
+.footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background: #0a0a0a;
+    border-top: 1px solid #1a1a1a;
+    padding: 1rem 2rem;
+    text-align: center;
+    box-shadow: 0 -2px 12px rgba(127, 90, 240, 0.1);
+}
+
+.footer-inner {
+    font-size: 0.875rem;
+    color: #888;
+    letter-spacing: 0.03em;
+    text-shadow: 0 0 5px #7f5af033;
+}
