@@ -4,6 +4,18 @@ import './software.css';
 
 import flstudio from '../../assets/software/flstudio.jpg';
 import serum from '../../assets/software/serum.png';
+import fabfilter from '../../assets/software/fabfilter.webp';
+import ep1 from '../../assets/software/ep1.png';
+import freshair from '../../assets/software/freshair.webp';
+import dune3 from '../../assets/software/dune3.jpg';
+import autotune from '../../assets/software/autotune.webp';
+import autokey from '../../assets/software/autokey.webp'
+import spire from '../../assets/software/spire.webp';
+import purity from '../../assets/software/purity.jpg';
+import rx11 from '../../assets/software/rx11.png';
+import omnisphere from '../../assets/software/omnisphere.jpeg';
+import miku from '../../assets/software/miku.jpg';
+import halftime from '../../assets/software/halftime.png';
 
 type Software = {
     id: number;
@@ -17,7 +29,19 @@ type Software = {
 
 const photos: Record<string, string> = {
     flstudio,
-    serum
+    serum,
+    fabfilter,
+    ep1,
+    freshair,
+    dune3,
+    autotune,
+    autokey,
+    spire,
+    purity,
+    rx11,
+    omnisphere,
+    miku,
+    halftime
 };
 
 export default function Software() {
@@ -84,19 +108,28 @@ export default function Software() {
                 <hr className='software-hr' />
                 <section className="software-grid">
                     {filteredSoftwares.map(p => (
-                        <article key={p.id} className="software-card">
-                            <img src={photos[p.image] || p.image} alt={p.title} className="software-image" />
-                            <div className="software-content">
-                                <h2>{p.title}</h2>
-                                <p>{p.bio}</p>
-                                <ul className="tech-stack">
-                                    {p.tech.map(t => (
-                                        <li key={t}>{t}</li>
-                                    ))}
-                                </ul>
-                                <Link to={`/software/${p.id}`}>View Code</Link>
-                            </div>
-                        </article>
+                        <Link
+                            key={p.id}
+                            to={`/software/${p.id}`}
+                            className="software-card-link"
+                        >
+                            <article className="software-card">
+                                <img
+                                    src={photos[p.image] || p.image}
+                                    alt={p.title}
+                                    className="software-image"
+                                />
+                                <div className="software-content">
+                                    <h2>{p.title}</h2>
+                                    <p>{p.bio}</p>
+                                    <ul className="tech-stack">
+                                        {p.tech.map(t => (
+                                            <li key={t}>{t}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </article>
+                        </Link>
                     ))}
                 </section>
                 <hr className='software-hr' />

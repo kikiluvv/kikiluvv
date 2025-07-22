@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import projectRoutes from './routes/software';
 import kitRoutes from './routes/kits';
-import galleryRoutes from './routes/gallery';
+import archiveRoutes from './routes/archive';
 
 dotenv.config();
 const app = express();
@@ -21,7 +21,7 @@ app.get('/', (_req, res) => {
 
 app.use('/api/software', projectRoutes);
 app.use('/api/kits', kitRoutes);
-app.use('/api/gallery', galleryRoutes);
+app.use('/api/archive', archiveRoutes);
 
 
 app.listen(PORT, () => {

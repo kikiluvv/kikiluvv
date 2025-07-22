@@ -2,12 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import LocomotiveScroll from "locomotive-scroll";
 import "locomotive-scroll/dist/locomotive-scroll.css";
 
-type GalleryItem = {
+type ArchiveItem = {
     id: number;
     title: string;
 };
 
-const itemCount = 20; // This limits how many items we show (you can adjust or derive dynamically)
+const itemCount = 20;
 const speed = 0.5;
 
 export default function ParallaxColumns() {
@@ -16,11 +16,12 @@ export default function ParallaxColumns() {
     const middleColRef = useRef<HTMLDivElement>(null);
     const rightColRef = useRef<HTMLDivElement>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
+    const titleRef = useRef<HTMLDivElement>(null);
 
     // States for fetched data and item height
-    const [leftItems, setLeftItems] = useState<GalleryItem[]>([]);
-    const [middleItems, setMiddleItems] = useState<GalleryItem[]>([]);
-    const [rightItems, setRightItems] = useState<GalleryItem[]>([]);
+    const [leftItems, setLeftItems] = useState<ArchiveItem[]>([]);
+    const [middleItems, setMiddleItems] = useState<ArchiveItem[]>([]);
+    const [rightItems, setRightItems] = useState<ArchiveItem[]>([]);
     const [itemHeight, setItemHeight] = useState(0);
     const [isReady, setIsReady] = useState(false);
 
@@ -29,17 +30,17 @@ export default function ParallaxColumns() {
         async function fetchColumnData() {
             try {
                 const [leftRes, middleRes, rightRes] = await Promise.all([
-                    fetch("/api/gallery/left-column"),
-                    fetch("/api/gallery/middle-column"),
-                    fetch("/api/gallery/right-column"),
+                    fetch("/api/archive/left-column"),
+                    fetch("/api/archive/middle-column"),
+                    fetch("/api/archive/right-column"),
                 ]);
                 console.log('Left Res: ', leftRes, ' Mid Res: ', middleRes, ' Right Res: ', rightRes)
                 if (!leftRes.ok || !middleRes.ok || !rightRes.ok) {
                     throw new Error("Failed to fetch columns");
                 }
-                const leftData: GalleryItem[] = await leftRes.json();
-                const middleData: GalleryItem[] = await middleRes.json();
-                const rightData: GalleryItem[] = await rightRes.json();
+                const leftData: ArchiveItem[] = await leftRes.json();
+                const middleData: ArchiveItem[] = await middleRes.json();
+                const rightData: ArchiveItem[] = await rightRes.json();
 
                 // Limit the number of items to itemCount or less
                 setLeftItems(leftData.slice(0, itemCount));
@@ -94,6 +95,25 @@ export default function ParallaxColumns() {
             applyTransform(leftColRef as React.RefObject<HTMLDivElement>, upPosition);
             applyTransform(middleColRef as React.RefObject<HTMLDivElement>, downPosition);
             applyTransform(rightColRef as React.RefObject<HTMLDivElement>, upPosition);
+
+            if (titleRef.current) {
+                const visibleThreshold = 200;
+                const fadeRange = 300;
+                const translateMultiplier = 0.3;
+
+                const translateY = Math.min(scrollY * translateMultiplier, visibleThreshold + fadeRange);
+
+                titleRef.current.style.transform = `translateY(-${translateY}px)`;
+
+
+
+                if (scrollY < visibleThreshold) {
+                    titleRef.current.style.opacity = "1";
+                } else {
+                    const fadeProgress = Math.min((scrollY - visibleThreshold) / fadeRange, 1);
+                    titleRef.current.style.opacity = `${1 - fadeProgress}`;
+                }
+            }
         });
 
         return () => {
@@ -101,7 +121,6 @@ export default function ParallaxColumns() {
         };
     }, [itemHeight, isReady]);
 
-    // Inline CSS styles (same as you had, with explicit TS)
     const styles = {
         fixedWrapper: {
             position: "fixed" as const,
@@ -147,18 +166,25 @@ export default function ParallaxColumns() {
         },
         title: {
             position: "fixed" as const,
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
+            top: 0,
+            left: "0",               // move left edge to center of viewport
+            width: "100vw",             // let width fit content (or max-content)
+            height: "120vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
             fontSize: "3rem",
             fontWeight: 700,
             color: "rgba(255, 255, 255, 0.8)",
-            zIndex: 10,
+            zIndex: 9999,
             textAlign: "center" as const,
             textShadow: "0 2px 10px rgba(0, 0, 0, 0.5)",
             fontFamily: "'Inter', sans-serif",
-            maxWidth: "80%",
-        },
+            backgroundColor: "rgba(0, 0, 0, 0.65)",
+            transition: "transform 0.1s ease-out, opacity 0.2s ease-out",
+            willChange: "transform, opacity",
+            pointerEvents: "none" as "none",
+        },        
     };
 
     // For seamless infinite loop, duplicate the data arrays
@@ -171,13 +197,17 @@ export default function ParallaxColumns() {
 
     return (
         <>
-            <div className="gallery-wrapper" style={styles.fixedWrapper}>
-                <div className="gallery-title" style={styles.title}>
-                    gallery
+            <div className="archive-wrapper" style={styles.fixedWrapper}>
+                <div className="archive-title" style={{
+                    ...styles.title,
+                    transition: "transform 0.1s ease-out, opacity 0.2s ease-out",
+                }}
+                    ref={titleRef}>
+                    archive
                 </div>
 
                 {/* Left Column */}
-                <div className="gallery-column" ref={leftColRef} style={styles.column}>
+                <div className="archive-column" ref={leftColRef} style={styles.column}>
                     <div
                         className="column-content"
                         style={{ ...styles.columnContent, height: contentHeight, top: 0 }}
@@ -198,7 +228,7 @@ export default function ParallaxColumns() {
                 </div>
 
                 {/* Middle Column */}
-                <div className="gallery-column" ref={middleColRef} style={styles.column}>
+                <div className="archive-column" ref={middleColRef} style={styles.column}>
                     <div
                         className="column-content"
                         style={{ ...styles.columnContent, height: contentHeight, top: -itemHeight }}
@@ -219,7 +249,7 @@ export default function ParallaxColumns() {
                 </div>
 
                 {/* Right Column */}
-                <div className="gallery-column" ref={rightColRef} style={styles.column}>
+                <div className="archive-column" ref={rightColRef} style={styles.column}>
                     <div
                         className="column-content"
                         style={{ ...styles.columnContent, height: contentHeight, top: 0 }}

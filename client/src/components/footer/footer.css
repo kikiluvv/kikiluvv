@@ -15,3 +15,65 @@
     letter-spacing: 0.03em;
     text-shadow: 0 0 5px #7f5af033;
 }
+
+.footer {
+    position: relative;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-top: 2rem;
+    color: #fff;
+    letter-spacing: 0.05em;
+    opacity: 0.85;
+    animation: spectralShift 8s ease-in-out infinite;
+    background: linear-gradient(90deg, #99ccff, #ff99cc, #ccffdd, #99ccff);
+    background-size: 300%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.footer::after {
+    content: 'appeal2heaven';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    pointer-events: none;
+    color: inherit;
+    opacity: 0.1;
+    animation: echoFlicker 6s ease-in-out infinite;
+    transform: translateY(0.5px);
+    z-index: -1;
+}
+
+@keyframes echoFlicker {
+
+    0%,
+    100% {
+        opacity: 0.05;
+        transform: translateY(0.5px);
+    }
+
+    50% {
+        opacity: 0.12;
+        transform: translateY(-0.5px);
+    }
+}
+
+
+@keyframes spectralShift {
+    0% {
+        background-position: 0% 50%;
+        filter: blur(0.1px) hue-rotate(0deg);
+    }
+
+    50% {
+        background-position: 100% 50%;
+        filter: blur(0.7px) hue-rotate(20deg);
+    }
+
+    100% {
+        background-position: 0% 50%;
+        filter: blur(0.1px) hue-rotate(0deg);
+    }
+}

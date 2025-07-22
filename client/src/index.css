@@ -30,6 +30,14 @@ body {
   --text-shadow: 0 0 5px #7f5af0cc;
   --hr-color: #7f5af0;
   --hr-shadow: 0 0 5px #7f5af0cc;
+  --card-shadow:
+    0 0 8px rgba(255, 255, 255, 0.05),
+    /* faint outer halo */
+    0 4px 12px rgba(0, 0, 0, 0.6);
+  --card-shadow-glow:
+    0 0 8px rgba(127, 90, 240, 0.2),
+    0 0 16px rgba(127, 90, 240, 0.1);
+
 }
 
 /* ====== GLOBAL TAG STYLES ====== */

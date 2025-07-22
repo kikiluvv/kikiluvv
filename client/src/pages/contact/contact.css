@@ -1,0 +1,226 @@
+.contact-wrapper {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: rgba(10, 10, 20, 0.95);
+    border-radius: 1.5rem;
+    box-shadow: 0 0 30px rgba(80, 60, 180, 0.2);
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.contact-title {
+    text-align: center;
+    color: #fff;
+    font-size: 3.5rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.contact-title:before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    color: rgba(127, 90, 240, 0.3);
+    z-index: -1;
+    filter: blur(15px);
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+}
+
+.contact-form label {
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+}
+
+.contact-input,
+.contact-textarea {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 1rem;
+    background: rgba(20, 20, 30, 0.5);
+    color: white;
+    font-size: 1rem;
+    font-family: inherit;
+    outline: none;
+    filter: url(#glass);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 10px rgba(127, 127, 255, 0.1);
+}
+
+.contact-input,
+.contact-textarea {
+    background: rgba(20, 20, 30, 0.5);
+    /* darker glass */
+    color: rgba(255, 255, 255, 0.95);
+    filter: none;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+.contact-input::placeholder,
+.contact-textarea::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.contact-input:focus,
+.contact-textarea:focus {
+    background: rgba(20, 20, 30, 0.5);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+
+.contact-footer {
+    text-align: center;
+    color: rgba(170, 170, 200, 0.7);
+    margin-top: 2.5rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+.glitch-title {
+    font-size: 4rem;
+    font-weight: 900;
+    position: relative;
+    color: #f0f0f0;
+    text-transform: uppercase;
+    text-align: center;
+    animation: pulse 3s ease-in-out infinite;
+}
+
+.glitch-title::before,
+.glitch-title::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    color: #f0f;
+    z-index: -1;
+}
+
+.glitch-title::before {
+    left: 2px;
+    text-shadow: -2px 0 magenta;
+    animation: glitch 2s infinite linear alternate-reverse;
+}
+
+.glitch-title::after {
+    left: -2px;
+    text-shadow: -2px 0 cyan;
+    animation: glitch 1.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch {
+    0% {
+        clip-path: inset(10% 0 85% 0);
+    }
+
+    20% {
+        clip-path: inset(50% 0 20% 0);
+    }
+
+    40% {
+        clip-path: inset(10% 0 70% 0);
+    }
+
+    60% {
+        clip-path: inset(80% 0 5% 0);
+    }
+
+    80% {
+        clip-path: inset(5% 0 60% 0);
+    }
+
+    100% {
+        clip-path: inset(15% 0 60% 0);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.contact-footer {
+    position: relative;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-top: 2rem;
+    color: #fff;
+    letter-spacing: 0.05em;
+    opacity: 0.85;
+    animation: spectralShift 8s ease-in-out infinite;
+    background: linear-gradient(90deg, #99ccff, #ff99cc, #ccffdd, #99ccff);
+    background-size: 300%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.contact-footer::after {
+    content: 'appeal2heaven';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    pointer-events: none;
+    color: inherit;
+    opacity: 0.1;
+    animation: echoFlicker 6s ease-in-out infinite;
+    transform: translateY(0.5px);
+    z-index: -1;
+}
+
+@keyframes echoFlicker {
+
+    0%,
+    100% {
+        opacity: 0.05;
+        transform: translateY(0.5px);
+    }
+
+    50% {
+        opacity: 0.12;
+        transform: translateY(-0.5px);
+    }
+}
+
+
+@keyframes spectralShift {
+    0% {
+        background-position: 0% 50%;
+        filter: blur(0.1px) hue-rotate(0deg);
+    }
+
+    50% {
+        background-position: 100% 50%;
+        filter: blur(0.7px) hue-rotate(20deg);
+    }
+
+    100% {
+        background-position: 0% 50%;
+        filter: blur(0.1px) hue-rotate(0deg);
+    }
+}

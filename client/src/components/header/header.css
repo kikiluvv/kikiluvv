@@ -6,12 +6,18 @@
     top: 0;
     z-index: 10;
     box-shadow: 0 2px 12px rgba(127, 90, 240, 0.1);
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
 }
 
 .header-inner {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
 .logo {

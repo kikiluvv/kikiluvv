@@ -1,12 +1,349 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-y: scroll;
+    background: #0d0d0d;
+    color: white;
+}
+
+.home-wrapper {
+    position: relative;
+    height: 80vh;
+    /* long scroll height */
+    overflow: hidden;
+}
+
+.bubble-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.bubble-wrapper {
+    position: absolute;
+    bottom: -15px;
+    border-radius: 50%;
+    animation-name: floatUp;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    will-change: transform;
+}
+
+.bubble {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    opacity: 0.9;
+    animation-name: spin, pulseOpacity;
+    animation-timing-function: linear, ease-in-out;
+    animation-iteration-count: infinite, infinite;
+    animation-fill-mode: none;
+    filter: drop-shadow(0 0 3px rgba(127, 90, 240, 0.3));
+    will-change: transform, opacity;
+}
+
+/* spin uses transform: rotate */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* floatUp uses transform: translateY */
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.4;
+    }
+
+    100% {
+        transform: translateY(-120vh) scale(1.4);
+        opacity: 0;
+    }
+}
+
+@keyframes pulseOpacity {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}
+
+
+
 .home-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 5rem 1rem;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
     text-align: center;
-    color: #f8f8ff;
-    min-height: 100vh;
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.1),
+        inset 0 -1px 2px rgba(255, 255, 255, 0.1),
+        0 0 40px rgba(127, 90, 240, 0.15),
+        0 0 80px rgba(127, 90, 240, 0.07);
+    background: linear-gradient(to bottom,
+            rgba(30, 30, 40, 0.1) 0%,
+            rgba(30, 30, 40, 0.01) 50%,
+            rgba(30, 30, 40, 0.1) 100%);
+    transform: translate(-50%, -50%) skewX(var(--skew-x, 0deg)) skewY(var(--skew-y, 0deg));
+    transition: transform 0.3s cubic-bezier(0.17, 0.67, 0.21, 0.99);
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    overflow: hidden;
+    isolation: isolate;
+
+}
+
+.home-container::marker {
+    display: none;
+}
+
+.home-container::selection {
+    background: transparent;
+}
+
+/* NEW: Glass edge refraction overlay */
+.home-container::selection {
+    display: none;
+}
+
+.home-container::backdrop {
+    background: transparent;
+}
+
+.home-container::view-transition-group {
+    display: contents;
+}
+
+.home-container::part(border-illusion) {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(ellipse at center,
+            rgba(255, 255, 255, 0.05) 0%,
+            transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+
+
+/* Liquid border effect */
+.home-container::before {
+    content: '';
+    position: absolute;
+    inset: -10px;
+    border-radius: 2rem;
+    background:
+        radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+            rgba(255, 255, 255, 0.1),
+            /* Reduced from 0.2 */
+            transparent 60%),
+        radial-gradient(circle at bottom right,
+            rgba(127, 90, 240, 0.1),
+            /* Reduced from 0.2 */
+            transparent 90%);
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    animation: liquid-warp 12s ease-in-out infinite;
+    filter: blur(25px);
+    z-index: -1;
+    transform: translateZ(-20px);
+    opacity: calc(0.7 + (var(--mouse-y, 50) - 50) * 0.01);
+    transition: opacity 0.3s ease;
+}
+
+
+/* Inner glow */
+.home-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+            rgba(255, 255, 255, 0.1) 0%,
+            rgba(255, 255, 255, 0.1) 40%,
+            transparent 60%);
+    opacity: 0.1;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    filter: blur(60px);
+    transform: translateZ(-10px);
+    box-shadow: 
+        0 0 30px rgba(127, 90, 240, 0.1),
+        0 0 60px rgba(127, 90, 240, 0.05);
+    transition: 
+        box-shadow 0.3s ease,
+        transform 0.3s ease;
+    z-index: -1;
+}
+
+@keyframes glossy-flicker {
+    0% {
+        transform: translate(-45%, -45%) scale(1);
+        opacity: 0.15;
+        filter: blur(40px);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.05);
+        opacity: 0.25;
+        filter: blur(65px);
+    }
+
+    100% {
+        transform: translate(-55%, -55%) scale(1.02);
+        opacity: 0.2;
+        filter: blur(50px);
+    }
+}
+
+
+@keyframes gentleFloat {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) rotate(0.5deg);
+    }
+
+    50% {
+        transform: translate(-50%, -51%) rotate(-0.5deg);
+    }
+}
+
+@keyframes liquid-warp {
+
+    0%,
+    100% {
+        transform: scale(1) rotate(0deg);
+        border-radius: 40% 60% 60% 40% / 60% 40% 60% 40%;
+    }
+
+    20% {
+        transform: scale(1.03) rotate(2deg);
+        border-radius: 50% 50% 40% 60% / 50% 60% 50% 40%;
+    }
+
+    40% {
+        transform: scale(1.01) rotate(-1deg);
+        border-radius: 60% 40% 50% 50% / 40% 50% 60% 60%;
+    }
+
+    60% {
+        transform: scale(1.04) rotate(3deg);
+        border-radius: 40% 60% 30% 70% / 70% 30% 70% 30%;
+    }
+
+    80% {
+        transform: scale(1.02) rotate(-2deg);
+        border-radius: 70% 30% 60% 40% / 50% 60% 50% 50%;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    100% {
+        background-position: 200% 200%;
+    }
+}
+
+@keyframes glowPulse {
+
+    0%,
+    100% {
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+}
+
+@keyframes glossy-move {
+    0% {
+        transform: translate(25%, 25%) rotate(0deg);
+    }
+
+    25% {
+        transform: translate(-25%, 50%) rotate(90deg);
+    }
+
+    50% {
+        transform: translate(50%, -25%) rotate(180deg);
+    }
+
+    75% {
+        transform: translate(-50%, -50%) rotate(270deg);
+    }
+
+    100% {
+        transform: translate(25%, 25%) rotate(360deg);
+    }
+}
+
+.glitch-title {
+    font-size: 3rem;
+    color: #7f5af0;
+    text-shadow: 0 0 8px rgba(127, 90, 240, 0.5);
+    margin-bottom: 1rem;
+}
+
+.intro {
+    color: #aaa;
+    font-style: italic;
+    margin-bottom: 2rem;
+}
+
+.link-grid {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.link-card {
+    padding: 1rem 2rem;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 0.5rem;
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.link-card:hover {
+    background: #2a2a2a;
 }
 
 .glitch-title {
@@ -78,39 +415,4 @@
     50% {
         opacity: 0.7;
     }
-}
-
-.intro {
-    margin-top: 1rem;
-    font-size: 1.1rem;
-    color: #bcbcbc;
-    max-width: 600px;
-}
-
-.link-grid {
-    margin-top: 3rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1rem;
-    width: 100%;
-    max-width: 600px;
-}
-
-.link-card {
-    display: block;
-    padding: 1.5rem;
-    background-color: #1f1f1f;
-    border: 1px solid #333;
-    border-radius: 12px;
-    text-decoration: none;
-    color: #ddd;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 10px transparent;
-}
-
-.link-card:hover {
-    background-color: #2a2a2a;
-    border-color: #666;
-    color: #fff;
-    box-shadow: 0 0 20px #7f5af0;
 }

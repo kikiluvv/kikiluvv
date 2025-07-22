@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import './home.css'
+
 
 type Bubble = {
     id: number;
@@ -17,20 +17,13 @@ type Bubble = {
 export default function Home() {
     const [bubbles, setBubbles] = useState<Bubble[]>([]);
     const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
-    const [skew, setSkew] = useState({ x: 0, y: 0 });
+    const [isHovering, setIsHovering] = useState(false);
 
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
             const x = (e.clientX / window.innerWidth) * 100;
             const y = (e.clientY / window.innerHeight) * 100;
             setMousePos({ x, y });
-
-            // Calculate skew based on mouse position relative to center
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
-            const skewX = ((e.clientX - centerX) / centerX) * 5; // Max 5 degrees
-            const skewY = ((e.clientY - centerY) / centerY) * 3; // Max 3 degrees
-            setSkew({ x: skewX, y: -skewY }); // Invert Y for more natural feel
         };
 
         window.addEventListener("mousemove", handleMouseMove);
@@ -60,7 +53,6 @@ export default function Home() {
         return () => clearInterval(spawnInterval);
     }, []);
 
-    // Remove bubbles once their animation is done
     function handleAnimationEnd(id: number) {
         setBubbles((prev) => prev.filter((b) => b.id !== id));
     }
@@ -98,11 +90,13 @@ export default function Home() {
                 style={{
                     "--mouse-x": `${mousePos.x}%`,
                     "--mouse-y": `${mousePos.y}%`,
-                    "--skew-x": `${skew.x}deg`,
-                    "--skew-y": `${skew.y}deg`,
-                    transform: `translate(-50%, -50%) skewX(var(--skew-x)) skewY(var(--skew-y))`,
+                    "--gloss-opacity": isHovering ? 0.8 : 0.5,
+                    "--liquid-intensity": isHovering ? 1.05 : 1,
                 } as React.CSSProperties}
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
             >
+                <div className="shimmer-overlay"></div>
                 <h1 className="glitch-title" data-text="ihateyoue.dev">
                     ihateyoue.dev
                 </h1>

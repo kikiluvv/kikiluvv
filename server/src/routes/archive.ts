@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 
-const gallery = [
+const archive = [
     {
         id: 1,
         title: "deezClicks",
@@ -86,17 +86,17 @@ function splitIntoColumns<T>(items: T[], numCols: number): T[][] {
 }
 
 router.get('/left-column', (_, res) => {
-    const [left] = splitIntoColumns(gallery, 3);
+    const [left] = splitIntoColumns(archive, 3);
     res.json(left);
 });
 
 router.get('/middle-column', (_, res) => {
-    const [, middle] = splitIntoColumns(gallery, 3);
+    const [, middle] = splitIntoColumns(archive, 3);
     res.json(middle);
 });
 
 router.get('/right-column', (_, res) => {
-    const [, , right] = splitIntoColumns(gallery, 3);
+    const [, , right] = splitIntoColumns(archive, 3);
     res.json(right);
 });
 
