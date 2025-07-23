@@ -8,10 +8,9 @@ import SoftwareDetail from '../pages/software/SoftwareDetail'
 import Contact from '../pages/contact/Contact'
 import DMCA from '../pages/dmca/DMCA'
 import Archive from '../pages/archive/Archive'
-
-import Home2 from '../pages/home/Home2'
-
 import NotFound from '../pages/notFound/NotFound'
+
+import Resume from '../pages/resume/Resume'
 
 
 export const router = createBrowserRouter([
@@ -28,10 +27,10 @@ export const router = createBrowserRouter([
                     { path: ':id', element: <SoftwareDetail /> }
                 ]
             },
+            { path: 'resume', element: <Resume />},
             { path: 'archive', element: <Archive /> },
             { path: 'contact', element: <Contact /> },
             { path: 'dmca', element: <DMCA /> },
-            { path: 'home2', element: <Home2 /> },
             { path: '*', element: <NotFound /> }
         ],
     },

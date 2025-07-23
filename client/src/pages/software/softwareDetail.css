@@ -8,6 +8,7 @@
     padding: 1rem;
     z-index: 1000;
     overflow-y: auto;
+    animation: fadeOverlay 0.3s ease-out;
 }
 
 .modal-content {
@@ -17,8 +18,30 @@
     width: 100%;
     max-width: 960px;
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.7);
-    animation: fadeIn 0.3s ease-out;
+    animation: fadeUp 0.3s ease-out;
     position: relative;
+}
+
+@keyframes fadeUp {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOverlay {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .modal-body {
@@ -33,18 +56,22 @@
     padding: 2rem;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
 }
 
 .detail-image {
     width: 100%;
+    height: 300px;
+    /* consistent height across all images */
+    object-fit: cover;
     max-height: 400px;
     object-fit: cover;
     border-radius: 0.75rem;
     box-shadow:
         inset 0 0 60px rgba(0, 0, 0, 0.5),
         0 4px 20px rgba(0, 0, 0, 0.6);
+    background-color: #1a1a1a;
 }
 
 .detail-info {
@@ -67,6 +94,8 @@
     font-size: 1rem;
     color: #ccc;
     line-height: 1.5;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #333;
 }
 
 .detail-bio {
@@ -80,7 +109,7 @@
     flex-wrap: wrap;
     gap: 0.5rem;
     padding: 0;
-    margin: 0;
+    margin-top: auto;
     list-style: none;
 }
 
@@ -95,11 +124,12 @@
 }
 
 .download-btn {
-    margin-top: auto;
     align-self: start;
     background: #7f5af0;
     color: #fff;
+    margin-top: 0;
     padding: 0.75rem 1.25rem;
+    width: 100%;
     border-radius: 8px;
     font-size: 1rem;
     font-weight: 600;
@@ -147,21 +177,6 @@
     margin-bottom: 1rem;
 }
 
-.download-btn {
-    width: 100%;
-    text-align: center;
-    background: #7f5af0;
-    color: #fff;
-    padding: 0.75rem 1.25rem;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: background 0.2s ease;
-    margin-top: auto;
-}
-
-
 @media (max-width: 768px) {
     .modal-body {
         flex-direction: column;
@@ -191,4 +206,30 @@
     /* optional dull background */
     color: #ccc;
     /* optional faded text */
+}
+
+.shimmer-border {
+    position: relative;
+    background-color: #121212;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.shimmer-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    border-radius: inherit;
+    background:
+        radial-gradient(120px circle at 50% 50%, rgba(127, 90, 240, 0.1), transparent 80%),
+        radial-gradient(100px circle at var(--x, 50%) var(--y, 50%), rgba(196, 180, 244, 0.35), transparent 80%);
+    pointer-events: none;
+    transition: background 0.2s ease;
+    mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+    z-index: 2;
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import './software.css';
 
@@ -9,7 +9,7 @@ import ep1 from '../../assets/software/ep1.png';
 import freshair from '../../assets/software/freshair.webp';
 import dune3 from '../../assets/software/dune3.jpg';
 import autotune from '../../assets/software/autotune.webp';
-import autokey from '../../assets/software/autokey.webp'
+import autokey from '../../assets/software/autokey.webp';
 import spire from '../../assets/software/spire.webp';
 import purity from '../../assets/software/purity.jpg';
 import rx11 from '../../assets/software/rx11.png';
@@ -49,6 +49,8 @@ export default function Software() {
     const [filterTech, setFilterTech] = useState<string>('all');
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
+    const globalMouseHandler = useRef<((e: MouseEvent) => void) | null>(null);
+
     useEffect(() => {
         fetch('/api/software')
             .then(res => res.json())
@@ -56,27 +58,43 @@ export default function Software() {
             .catch(console.error);
     }, []);
 
-    // get unique tech tags across all software items
+    useEffect(() => {
+        globalMouseHandler.current = (e: MouseEvent) => {
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+
+            const cards = document.querySelectorAll<HTMLElement>('.software-card');
+            cards.forEach(card => {
+                card.style.setProperty('--mouse-x', `${x}%`);
+                card.style.setProperty('--mouse-y', `${y}%`);
+            });
+        };
+
+        window.addEventListener('mousemove', globalMouseHandler.current);
+        return () => {
+            if (globalMouseHandler.current) {
+                window.removeEventListener('mousemove', globalMouseHandler.current);
+            }
+        };
+    }, []);
+
     const allTechTags = useMemo(() => {
         const tags = new Set<string>();
         softwares.forEach(s => s.tech.forEach(t => tags.add(t)));
         return Array.from(tags).sort();
     }, [softwares]);
 
-    // filtered + sorted software list
     const filteredSoftwares = useMemo(() => {
         let filtered = softwares;
         if (filterTech !== 'all') {
             filtered = filtered.filter(s => s.tech.includes(filterTech));
         }
 
-        filtered = filtered.sort((a, b) => {
+        return filtered.sort((a, b) => {
             if (a.title < b.title) return sortOrder === 'asc' ? -1 : 1;
             if (a.title > b.title) return sortOrder === 'asc' ? 1 : -1;
             return 0;
         });
-
-        return filtered;
     }, [softwares, filterTech, sortOrder]);
 
     return (
@@ -90,9 +108,7 @@ export default function Software() {
                         <select value={filterTech} onChange={e => setFilterTech(e.target.value)}>
                             <option value="all">All</option>
                             {allTechTags.map(tag => (
-                                <option key={tag} value={tag}>
-                                    {tag}
-                                </option>
+                                <option key={tag} value={tag}>{tag}</option>
                             ))}
                         </select>
                     </label>
@@ -105,14 +121,12 @@ export default function Software() {
                         </select>
                     </label>
                 </div>
+
                 <hr className='software-hr' />
+
                 <section className="software-grid">
                     {filteredSoftwares.map(p => (
-                        <Link
-                            key={p.id}
-                            to={`/software/${p.id}`}
-                            className="software-card-link"
-                        >
+                        <Link key={p.id} to={`/software/${p.id}`} className="software-card-link">
                             <article className="software-card">
                                 <img
                                     src={photos[p.image] || p.image}
@@ -132,9 +146,9 @@ export default function Software() {
                         </Link>
                     ))}
                 </section>
+
                 <hr className='software-hr' />
             </main>
-
             <Outlet />
         </>
     );

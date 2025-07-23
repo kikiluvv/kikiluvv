@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './softwareDetail.css';
 
 import flstudio from '../../assets/software/flstudio.jpg';
@@ -74,6 +74,30 @@ export default function SoftwareDetail() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [software, setSoftware] = useState<Software | null>(null);
+    const shimmerRef = useRef<HTMLDivElement>(null);
+    const overlayRef = useRef<HTMLDivElement>(null);
+
+    function handleMouseMove(e: React.MouseEvent) {
+        const shimmer = shimmerRef.current;
+        if (!shimmer) return;
+
+        const rect = shimmer.getBoundingClientRect();
+
+        // Calculate position relative to the modal content
+        let x = e.clientX - rect.left;
+        let y = e.clientY - rect.top;
+
+        // Clamp the values to stay within the modal bounds
+        x = Math.max(0, Math.min(x, rect.width));
+        y = Math.max(0, Math.min(y, rect.height));
+
+        // Convert to percentage for smoother edge effects
+        const xPercent = (x / rect.width) * 100;
+        const yPercent = (y / rect.height) * 100;
+
+        shimmer.style.setProperty('--x', `${xPercent}%`);
+        shimmer.style.setProperty('--y', `${yPercent}%`);
+    }
 
     useEffect(() => {
         fetch(`/api/software/${id}`)
@@ -89,8 +113,17 @@ export default function SoftwareDetail() {
     }
 
     return (
-        <div className="modal-overlay" onClick={closeModal}>
-            <div className="modal-content" onClick={e => e.stopPropagation()}>
+        <div
+            className="modal-overlay"
+            ref={overlayRef}
+            onMouseMove={handleMouseMove}
+            onClick={closeModal}
+        >
+            <div
+                className="modal-content shimmer-border"
+                ref={shimmerRef}
+                onClick={(e) => e.stopPropagation()}
+            >
                 <button className="modal-close-btn" onClick={closeModal} aria-label="Close modal">
                     ×
                 </button>
