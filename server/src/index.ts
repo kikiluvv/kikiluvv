@@ -10,7 +10,23 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+const allowedOrigins = [
+    'http://localhost:3000',
+    'https://ihateyoue.netlify.app/',
+    'https://ihateyoue.onrender.com', 
+];
+
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        }
+        return callback(new Error('Not allowed by CORS'));
+    },
+    credentials: true,
+}));
+
 app.use(express.json());
 app.use('/files', express.static(path.join(__dirname, '../files')));
 

@@ -30,9 +30,9 @@ export default function ParallaxColumns() {
         async function fetchColumnData() {
             try {
                 const [leftRes, middleRes, rightRes] = await Promise.all([
-                    fetch("/api/archive/left-column"),
-                    fetch("/api/archive/middle-column"),
-                    fetch("/api/archive/right-column"),
+                    fetch("https://ihateyoue.onrender.com/api/archive/left-column"),
+                    fetch("https://ihateyoue.onrender.com/api/archive/middle-column"),
+                    fetch("https://ihateyoue.onrender.com/api/archive/right-column"),
                 ]);
                 console.log('Left Res: ', leftRes, ' Mid Res: ', middleRes, ' Right Res: ', rightRes)
                 if (!leftRes.ok || !middleRes.ok || !rightRes.ok) {

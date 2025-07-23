@@ -49,7 +49,7 @@ const photos: Record<string, string> = {
 };
 
 function handleDownload(id: number, title: string, fileType: string) {
-    fetch(`http://localhost:5000/api/software/download/${id}`)
+    fetch(`https://ihateyoue.onrender.com/api/software/download/${id}`)
         .then(response => {
             if (!response.ok) throw new Error('Download failed.');
             return response.blob();
@@ -100,7 +100,7 @@ export default function SoftwareDetail() {
     }
 
     useEffect(() => {
-        fetch(`/api/software/${id}`)
+        fetch(`https://ihateyoue.onrender.com/api/software/${id}`)
             .then(res => res.json())
             .then(setSoftware)
             .catch(console.error);

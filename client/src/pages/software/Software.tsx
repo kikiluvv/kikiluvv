@@ -52,7 +52,7 @@ export default function Software() {
     const globalMouseHandler = useRef<((e: MouseEvent) => void) | null>(null);
 
     useEffect(() => {
-        fetch('/api/software')
+        fetch('https://ihateyoue.onrender.com/api/software')
             .then(res => res.json())
             .then(setSoftwares)
             .catch(console.error);
