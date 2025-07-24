@@ -338,7 +338,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.get('/download/:slug', (req, res, next) => {
-    const assetsDir = path.join(__dirname, '..', 'assets');
+    const assetsDir = path.join(__dirname, '..', '..', 'assets');
 
     // List all files inside assets folder
     fs.readdir(assetsDir, (err, files) => {
