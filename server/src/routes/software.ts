@@ -340,6 +340,18 @@ router.get('/:id', (req, res) => {
 router.get('/download/:slug', (req, res, next) => {
     const assetsDir = path.join(__dirname, '..', '..', 'assets');
 
+    // Log root-level directories
+    const rootPath = '/opt/render/project/src'; // or '/' if you want true root
+    try {
+        const dirs = fs.readdirSync(rootPath, { withFileTypes: true });
+        console.log(`[Render] Contents of ${rootPath}:`);
+        dirs.forEach(dirent => {
+            console.log(`  - ${dirent.name} ${dirent.isDirectory() ? '(dir)' : '(file)'}`);
+        });
+    } catch (err) {
+        console.error(`[Render] Failed to list directory at ${rootPath}:`, err);
+    }
+
     // List all files inside assets folder
     fs.readdir(assetsDir, (err, files) => {
         if (err) {
