@@ -14,7 +14,7 @@ const softwares = [
         fileType: "zip",
         version: "v1.0.0",
         fileSize: "5.3MB",
-        available: false
+        available: true
     },
     {
         id: 2,
@@ -119,9 +119,10 @@ const softwares = [
         description: "Get industry-leading pitch correction with AutoTune Artist by Antares. Real-time tracking, live performance optimization, and advanced vocal effects.",
         tech: ["Audio", "Mac", "VST", "Antares"],
         image: "autotune",
-        version: 'v1.0.2',
+        version: 'v9.2.0',
         fileSize: '589mb',
         fileType: 'zip',
+        slug: 'Auto-Tune_Artist_v9.2.0',
         available: true
     },
     {
@@ -291,6 +292,32 @@ const softwares = [
         fileSize: '589mb',
         fileType: 'zip',
         available: false
+    },
+    {
+        id: 25,
+        title: "Analog Lab V",
+        bio: "Arturia Analog Lab V VST Synthesizer",
+        description: "Create, produce, perform. Analog Lab is a plugin that combines thousands of world-class presets spanning dozens of timeless instruments, instant-access controls, and flawless integration - in one place.",
+        tech: ["Audio", "Mac", "VST", "Arturia"],
+        image: "analoglab",
+        version: 'v5.10.2',
+        fileSize: '4.6gb',
+        fileType: 'zip',
+        slug: 'Analog_Lab_v5.10.2',
+        available: true
+    },
+    {
+        id: 26,
+        title: "Inhale",
+        bio: "a2h Inhale FX VST",
+        description: "gang",
+        tech: ["Audio", "Mac", "VST", "a2h"],
+        image: "analoglab",
+        version: 'v0.0.1',
+        fileSize: '555kb',
+        fileType: 'zip',
+        slug: 'inhale',
+        available: true
     }
 ];
 
@@ -310,10 +337,10 @@ router.get('/:id', (req, res) => {
     res.json(software);
 });
 
-router.get('/download/:slug', (req, res) => {
+router.get('/download/:slug', (req, res, next) => {
     const { slug } = req.params;
+    console.log('Downloading ', slug)
 
-    // Define a map or logic to resolve slugs to actual file paths
     const fileMap: Record<string, string> = {
         '1': 'kys.zip',
         '2': 'gonephishin.zip',
@@ -324,7 +351,7 @@ router.get('/download/:slug', (req, res) => {
         '7': 'dune3.zip',
         '8': 'halftime.zip',
         '9': 'rx11.zip',
-        '10': 'autotune.zip',
+        '10': 'Auto-Tune_Artist_v9.2.0.zip',
         '11': 'freshair.zip',
         '12': 'spire.zip',
         '13': 'miku.zip',
@@ -337,8 +364,9 @@ router.get('/download/:slug', (req, res) => {
         '20': 'benzopresets.zip',
         '21': 'echobox.zip',
         '22': 'deezclicks.zip',
+        '25': 'Analog_Lab_v5.10.2.zip',
+        '26': 'inhale.zip'
     };
-
 
     const fileName = fileMap[slug];
 
@@ -346,18 +374,33 @@ router.get('/download/:slug', (req, res) => {
         return res.status(404).json({ message: 'File not found' });
     }
 
-    const filePath = path.join(__dirname, '..', 'assets', fileName); // Adjust if needed
+    const filePath = path.join(__dirname, '..', 'assets', fileName);
 
     if (!fs.existsSync(filePath)) {
         return res.status(404).json({ message: 'File not found on disk' });
     }
 
-    res.download(filePath, fileName, err => {
-        if (err) {
-            console.error('Download error:', err);
-            res.status(500).json({ message: 'Failed to download file' });
+    const stat = fs.statSync(filePath);
+    res.writeHead(200, {
+        'Content-Type': 'application/zip',
+        'Content-Length': stat.size,
+        'Content-Disposition': `attachment; filename="${fileName}"`,
+    });
+
+    const readStream = fs.createReadStream(filePath);
+    readStream.pipe(res);
+
+    readStream.on('error', err => {
+        console.error('Stream error:', err);
+        if (!res.headersSent) {
+            res.status(500).json({ message: 'Failed to stream file' });
         }
     });
+
+    res.on('close', () => {
+        readStream.destroy(); // prevent leaks on interrupted connection
+    });
 });
+
 
 export default router;

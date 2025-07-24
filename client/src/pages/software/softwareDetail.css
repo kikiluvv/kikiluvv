@@ -164,10 +164,25 @@
     font-size: 0.875rem;
     color: #888;
     display: flex;
+    flex-direction: column;
     gap: 0.5rem;
     align-items: center;
     margin-top: 1rem;
     margin-bottom: 1rem;
+}
+
+.file-meta-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.file-warning {
+    color: var(--subtle-warning, #ffc107);
+    font-size: 0.85rem;
+    margin-left: 0.5rem;
+    font-style: italic;
 }
 
 .divider {
@@ -232,4 +247,22 @@
     mask-composite: exclude;
     -webkit-mask-composite: xor;
     z-index: 2;
+}
+
+.spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid transparent;
+    border-top: 2px solid rgba(255, 255, 255, 0.6);
+    border-right: 2px solid rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(4px);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }

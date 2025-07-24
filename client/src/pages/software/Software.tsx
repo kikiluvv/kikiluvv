@@ -16,6 +16,7 @@ import rx11 from '../../assets/software/rx11.png';
 import omnisphere from '../../assets/software/omnisphere.jpeg';
 import miku from '../../assets/software/miku.jpg';
 import halftime from '../../assets/software/halftime.png';
+import analoglab from '../../assets/software/analoglab.jpg';
 
 type Software = {
     id: number;
@@ -41,7 +42,8 @@ const photos: Record<string, string> = {
     rx11,
     omnisphere,
     miku,
-    halftime
+    halftime,
+    analoglab
 };
 
 export default function Software() {
@@ -51,8 +53,17 @@ export default function Software() {
 
     const globalMouseHandler = useRef<((e: MouseEvent) => void) | null>(null);
 
+    /*
     useEffect(() => {
         fetch('https://ihateyoue.onrender.com/api/software')
+            .then(res => res.json())
+            .then(setSoftwares)
+            .catch(console.error);
+    }, []);
+*/
+
+    useEffect(() => {
+        fetch('http://localhost:5000/api/software')
             .then(res => res.json())
             .then(setSoftwares)
             .catch(console.error);

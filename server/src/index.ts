@@ -11,7 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 const allowedOrigins: string[] = [
-    'http://localhost:3000',
+    'http://localhost:5173',
     'https://ihateyoue.netlify.app',
     'https://ihateyoue.onrender.com',
 ];

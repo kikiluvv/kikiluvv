@@ -16,6 +16,7 @@ import rx11 from '../../assets/software/rx11.png';
 import omnisphere from '../../assets/software/omnisphere.jpeg';
 import miku from '../../assets/software/miku.jpg';
 import halftime from '../../assets/software/halftime.png';
+import analoglab from '../../assets/software/analoglab.jpg';
 
 type Software = {
     id: number;
@@ -28,6 +29,7 @@ type Software = {
     version: string;
     fileSize: string;
     fileType: string;
+    slug: string;
     available: boolean;
 };
 
@@ -45,9 +47,11 @@ const photos: Record<string, string> = {
     rx11,
     omnisphere,
     miku,
-    halftime
+    halftime,
+    analoglab
 };
 
+/*
 function handleDownload(id: number, title: string, fileType: string) {
     fetch(`https://ihateyoue.onrender.com/api/software/download/${id}`)
         .then(response => {
@@ -69,6 +73,7 @@ function handleDownload(id: number, title: string, fileType: string) {
             alert('Failed to download file. Server said no.');
         });
 }
+*/
 
 export default function SoftwareDetail() {
     const { id } = useParams();
@@ -76,6 +81,53 @@ export default function SoftwareDetail() {
     const [software, setSoftware] = useState<Software | null>(null);
     const shimmerRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
+    const [downloading, setDownloading] = useState(false);
+
+    function handleDownload(id: number, title: string, fileType: string) {
+        setDownloading(true);
+        fetch(`http://localhost:5000/api/software/download/${id}`)
+            .then(response => {
+                if (!response.ok) throw new Error('Download failed.');
+                return response.blob();
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${title}.${fileType}`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(err => {
+                console.error(err);
+                alert('Failed to download file. Server said no.');
+            })
+            .finally(() => {
+                setDownloading(false);
+            });
+    }
+
+    function isLargeFile(sizeStr: string): boolean {
+        // Extract numeric value and unit
+        const match = sizeStr.toLowerCase().match(/^([\d.]+)\s*(gb|mb|kb)$/);
+        if (!match) return false;
+
+        const [, value, unit] = match;
+        const size = parseFloat(value);
+
+        switch (unit) {
+            case 'gb':
+                return size > 2;
+            case 'mb':
+                return size > 2048; // 2GB in MB
+            case 'kb':
+                return size > 2 * 1024 * 1024; // 2GB in KB
+            default:
+                return false;
+        }
+    }
 
     function handleMouseMove(e: React.MouseEvent) {
         const shimmer = shimmerRef.current;
@@ -99,8 +151,17 @@ export default function SoftwareDetail() {
         shimmer.style.setProperty('--y', `${yPercent}%`);
     }
 
+    /*
     useEffect(() => {
         fetch(`https://ihateyoue.onrender.com/api/software/${id}`)
+            .then(res => res.json())
+            .then(setSoftware)
+            .catch(console.error);
+    }, [id]);
+    */
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/api/software/${id}`)
             .then(res => res.json())
             .then(setSoftware)
             .catch(console.error);
@@ -135,10 +196,19 @@ export default function SoftwareDetail() {
                             className="detail-image"
                         />
                         <div className="file-meta">
-                            <span>{software.version}</span>
-                            <span>•</span>
-                            <span>{software.fileSize} • {software.title}.{software.fileType}</span>
+                            <div className="file-meta-container">
+                    
+                                <span>
+                                    {software.version} • {software.slug}.{software.fileType} • {software.fileSize}
+                                </span>
+                            </div>
+                            <div className="file-meta-container">
+                                {isLargeFile(software.fileSize) && (
+                                    <span className="file-warning">• Larger files may take longer to download </span>
+                                )}
+                            </div>
                         </div>
+
                     </div>
                     <div className="detail-info">
                         <h1>{software.title}</h1>
@@ -149,16 +219,19 @@ export default function SoftwareDetail() {
                             ))}
                         </ul>
                         <button
-                            className={`download-btn ${!software.available ? 'disabled' : ''}`}
+                            className={`download-btn ${!software.available || downloading ? 'disabled' : ''}`}
                             onClick={() =>
-                                software.available &&
+                                software.available && !downloading &&
                                 handleDownload(software.id, software.title, software.fileType)
                             }
-                            disabled={!software.available}
+                            disabled={!software.available || downloading}
                         >
-                            ⬇ Download
+                            {downloading ? (
+                                <div className="spinner"></div>
+                            ) : (
+                                `⬇ Download • ${software.fileSize}`
+                            )}
                         </button>
-
                         {!software.available && (
                             <p className="unavailable-msg">This software is currently unavailable for download.</p>
                         )}

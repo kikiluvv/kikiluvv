@@ -14,6 +14,12 @@ type Bubble = {
     pulseDuration: number;
 };
 
+type Quote = {
+    text: string;
+    author: string;
+    year: number | string;
+};
+
 function calculateShadowDirection(tiltX: number, tiltY: number) {
     const angle = Math.atan2(tiltY, tiltX);
     const distance = Math.sqrt(tiltX * tiltX + tiltY * tiltY);
@@ -31,8 +37,29 @@ export default function Home() {
     const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
     const [tilt, setTilt] = useState({ x: 0, y: 0 });
     const containerRef = useRef<HTMLDivElement>(null);
-
     const globalMouseHandler = useRef<((e: MouseEvent) => void) | null>(null);
+    const [quote, setQuote] = useState<Quote | null>(null);
+
+    const quotes: Quote[] = [
+        { text: "At the end of the day, you're still the artist behind your life. Paint the better version of yourself while you still have time.", author: "Young Thug", year: "300 B.C." },
+        { text: "Balenci my shoes, I'm in the trap with a fronto.", author: "Nettspend", year: 2023 },
+        { text: "Hold my hand if you think its for life...", author: "Nettspend", year: 2024 },
+        { text: "Stay ready so you don’t gotta get ready.", author: "Nettspend", year: 2023 },
+        { text: "If money ain’t the motive, then I don’t know what’s the motive.", author: "Meek Mill", year: 2017 },
+        { text: "Swag on a hundred thousand trillion.", author: "Young Thug", year: 2016 },
+        { text: "I just been pullin’ up, shittin’ on them all day, I stink", author: "Yeat", year: 2022 },
+        { text: "Yeah this perky got me snail you should call me Gary", author: "Yeat", year: 2021 },
+        { text: "When she off the clock she 12 under my covers, undercover", author: "Summrs", year: 2024 },
+        { text: "Happiness is when what you think, what you say, and what you do are in harmony.", author: "Lil Shine", year: 1934 },
+        { text: "Grind now, shine later.", author: "Nettspend", year: 1843 },
+        { text: "Level up or get left behind.", author: "Nettspend", year: 1743 },
+    ];
+
+
+    useEffect(() => {
+        const randomIndex = Math.floor(Math.random() * quotes.length);
+        setQuote(quotes[randomIndex]);
+    }, []);
 
     useEffect(() => {
         globalMouseHandler.current = (e: MouseEvent) => {
@@ -179,8 +206,6 @@ export default function Home() {
                         opacity: Math.min(0.7, (Math.abs(tilt.x) + Math.abs(tilt.y)) / 10)
                     }}
                 />
-
-                {/* 🔮 Added edge shadow for depth */}
                 <div
                     className="glass-edge-shadow"
                     style={{
@@ -193,20 +218,31 @@ export default function Home() {
                         )`
                     }}
                 />
-
-                <h1 className="glitch-title" data-text="kiki.dev">
-                    kiki.dev
+                <h1 className="glitch-title" data-text="ihateyoue.dev">
+                    ihateyoue.dev
                 </h1>
 
                 <p className="intro">
-                    website <br />
-                    poopy pants
+                    internet archive<br /><br />
+                    <em>
+                        {quote ? (
+                            <>
+                                "{quote.text}"
+                                <br />
+                                <span className="quote-author">
+                                    — {quote.author}, <small>{quote.year}</small>
+                                </span>
+                            </>
+                        ) : (
+                            "Loading quote..."
+                        )}
+                    </em>
                 </p>
 
                 <div className="link-grid">
                     <Link to="/software" className="link-card">🧩 software</Link>
                     <Link to="/archive" className="link-card">📜 archive</Link>
-                    <a href="/api/files/resume.pdf" download className="link-card">⬇️ download pdf</a>
+                    <Link to="/contact" className="link-card">📞 contact</Link>
                 </div>
             </div>
         </section>
