@@ -338,8 +338,19 @@ router.get('/:id', (req, res) => {
 });
 
 router.get('/download/:slug', (req, res, next) => {
+    const assetsDir = path.join(__dirname, '..', 'assets');
+
+    // List all files inside assets folder
+    fs.readdir(assetsDir, (err, files) => {
+        if (err) {
+            console.error('[Download] Failed to read assets directory:', err);
+        } else {
+            console.log('[Download] Files currently in assets folder:', files);
+        }
+    });
+
     const { slug } = req.params;
-    console.log('Downloading ', slug)
+    console.log('[Download] Requested slug:', slug);
 
     const fileMap: Record<string, string> = {
         '1': 'kys.zip',
@@ -371,16 +382,21 @@ router.get('/download/:slug', (req, res, next) => {
     const fileName = fileMap[slug];
 
     if (!fileName) {
+        console.warn(`[Download] File not found in fileMap for slug: "${slug}"`);
         return res.status(404).json({ message: 'File not found' });
     }
 
-    const filePath = path.join(__dirname, '..', 'assets', fileName);
+    const filePath = path.join(assetsDir, fileName);
+    console.log('[Download] Resolved file path:', filePath);
 
     if (!fs.existsSync(filePath)) {
+        console.warn(`[Download] File not found on disk at path: "${filePath}"`);
         return res.status(404).json({ message: 'File not found on disk' });
     }
 
     const stat = fs.statSync(filePath);
+    console.log('[Download] File size (bytes):', stat.size);
+
     res.writeHead(200, {
         'Content-Type': 'application/zip',
         'Content-Length': stat.size,
@@ -391,16 +407,18 @@ router.get('/download/:slug', (req, res, next) => {
     readStream.pipe(res);
 
     readStream.on('error', err => {
-        console.error('Stream error:', err);
+        console.error('[Download] Stream error:', err);
         if (!res.headersSent) {
             res.status(500).json({ message: 'Failed to stream file' });
         }
     });
 
     res.on('close', () => {
-        readStream.destroy(); // prevent leaks on interrupted connection
+        console.log('[Download] Response closed, destroying read stream');
+        readStream.destroy();
     });
 });
+
 
 
 export default router;
