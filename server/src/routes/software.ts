@@ -355,7 +355,7 @@ function logDirectoryRecursive(dirPath: string, depth = 0) {
 }
 
 router.get('/download/:slug', (req, res, next) => {
-    const assetsDir = path.join(__dirname, '..', '..', 'assets');
+    const assetsDir = path.join(__dirname, '..', '..', 'src', 'assets');
 
     // Log root-level directories
     const serverPath = '/opt/render/project/src/server';
