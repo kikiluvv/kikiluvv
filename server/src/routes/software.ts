@@ -337,21 +337,30 @@ router.get('/:id', (req, res) => {
     res.json(software);
 });
 
+function logDirectoryRecursive(dirPath: string, depth = 0) {
+    try {
+        const entries = fs.readdirSync(dirPath, { withFileTypes: true });
+        entries.forEach(entry => {
+            const indent = '  '.repeat(depth);
+            const fullPath = path.join(dirPath, entry.name);
+            console.log(`${indent}- ${entry.name} ${entry.isDirectory() ? '(dir)' : '(file)'}`);
+
+            if (entry.isDirectory()) {
+                logDirectoryRecursive(fullPath, depth + 1);
+            }
+        });
+    } catch (err) {
+        console.error(`[Render] Failed to read directory ${dirPath}:`, err);
+    }
+}
+
 router.get('/download/:slug', (req, res, next) => {
     const assetsDir = path.join(__dirname, '..', '..', 'assets');
 
     // Log root-level directories
-    const rootPath = '/opt/render/project/src'; // or '/' if you want true root
-    try {
-        const dirs = fs.readdirSync(rootPath, { withFileTypes: true });
-        console.log(`[Render] Contents of ${rootPath}:`);
-        dirs.forEach(dirent => {
-            console.log(`  - ${dirent.name} ${dirent.isDirectory() ? '(dir)' : '(file)'}`);
-        });
-    } catch (err) {
-        console.error(`[Render] Failed to list directory at ${rootPath}:`, err);
-    }
-
+    const serverPath = '/opt/render/project/src/server';
+    console.log(`[Render] Recursively listing contents of ${serverPath}:`);
+    logDirectoryRecursive(serverPath);
     // List all files inside assets folder
     fs.readdir(assetsDir, (err, files) => {
         if (err) {
